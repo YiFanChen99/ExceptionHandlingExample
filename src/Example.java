@@ -21,7 +21,7 @@ public class Example {
 			throw new RuntimeException(e);
 		}
 	}
-
+//
 	/**
 	 * The exception thrown from catch will be overwritten, we can get the
 	 * exception from finally block only.
