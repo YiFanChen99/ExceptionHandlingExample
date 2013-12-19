@@ -6,6 +6,16 @@ public class Example {
 		tryWithResourcesStatementWithTwoResources();
 	}
 
+	public static void formOfCreateResourceInJava6WithoutClose() {
+		CloseableWithException resource = null;
+		try {
+			resource = new CloseableWithException("resource");
+			resource.doSomething();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	/**
 	 * Never closed.
 	 */
@@ -19,6 +29,22 @@ public class Example {
 			System.out.println("Entered catch block");
 			System.out.println("Threw Exception in catch block");
 			throw new RuntimeException(e);
+		}
+	}
+
+	public static void formOfCreateResourceInJava6WithCloseInFinally() {
+		CloseableWithException resource = null;
+		try {
+			resource = new CloseableWithException("resource");
+			resource.doSomething();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} finally {
+			try {
+				resource.close();
+			} catch (IOException e2) {
+				throw new RuntimeException(e2);
+			}
 		}
 	}
 
@@ -56,6 +82,9 @@ public class Example {
 		}
 	}
 
+	/**
+	 * Resource will be closed before enter the catch block
+	 */
 	public static void tryWithResourcesStatementInJava7() {
 		System.out.println("Before try statement");
 		try (CloseableWithException resource = new CloseableWithException(
@@ -66,6 +95,14 @@ public class Example {
 			System.out.println("Entered catch block");
 			System.out.println("Threw Exception in catch block");
 			throw new RuntimeException(e);
+		}
+	}
+
+	public static void formOfTryWithResourcesStatementWithoutCatchAndFinallyBlock()
+			throws IOException {
+		try (CloseableWithException resource = new CloseableWithException(
+				"resource")) {
+			resource.doSomething();
 		}
 	}
 
@@ -81,6 +118,11 @@ public class Example {
 		}
 	}
 
+	/**
+	 * The resource create later will be closed automatically earlier. And even
+	 * if there is an exception when closing the resources, it will try to close
+	 * all resources.
+	 */
 	public static void tryWithResourcesStatementWithTwoResources() {
 		System.out.println("Before try statement");
 		try (CloseableWithException fisrtResource = new CloseableWithException(
@@ -96,5 +138,5 @@ public class Example {
 			throw new RuntimeException(e);
 		}
 	}
-
+	
 }
