@@ -34,12 +34,12 @@ public class IssueExample {
 		}
 	}
 
-	/**
+	/*
 	 * This close statement will not be detected.
 	 * (SuperMethodInvocation is not a MethodInvocation)
 	 * 
-	 * Example in ant: org.apache.tools.ant.taskdefs.optional.perforce.P4OutputStream(super.close)
-	 * There are more
+	 * Example in ant (more than this):
+	 * 	org.apache.tools.ant.taskdefs.optional.perforce.P4OutputStream(super.close)
 	 */
 	class ConcreteCloseable extends SuperCloseable {
 		public void close() throws IOException {
