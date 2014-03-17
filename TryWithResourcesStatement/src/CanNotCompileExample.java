@@ -34,4 +34,12 @@ public class CanNotCompileExample {
 			resource.close();
 		}
 	}
+
+	/**
+	 * Don't allow non-AutoCloseable resource be declared in try-with-resource
+	 */
+	public static void declaredNonresourceInstanceInTryWithResource() {
+		try (int a = 10;) {
+		}
+	}
 }
